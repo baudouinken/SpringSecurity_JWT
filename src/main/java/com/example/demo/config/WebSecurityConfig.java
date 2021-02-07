@@ -18,16 +18,22 @@ import com.example.demo.jwt.AuthEntryPointJwt;
 import com.example.demo.jwt.AuthTokenFilter;
 import com.example.demo.service.UserDetailService;
 
+/*
+ * WebSecurityConfigurerAdapter is the crux of our security implementation. 
+ * It provides HttpSecurity configurations to configure cors, csrf, session management, rules for protected resources
+ * 
+*/
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
-	
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
 	@Autowired
 	UserDetailService userDetailsService;
 
 	@Autowired
-	private AuthEntryPointJwt unauthorizedHandler;
+	private AuthEntryPointJwt unauthorizedHandler; // AuthenticationEntryPoint will catch authentication error
 
 	@Bean
 	public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -52,12 +58,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable()
-			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-			.authorizeRequests().antMatchers("/api/auth/**").permitAll()
-			.antMatchers("/api/test/**").permitAll()
-			.anyRequest().authenticated();
+		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+				.antMatchers("/api/auth/**").permitAll().antMatchers("/api/test/**").permitAll().anyRequest()
+				.authenticated();
 
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}

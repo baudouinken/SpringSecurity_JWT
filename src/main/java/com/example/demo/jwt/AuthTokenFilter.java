@@ -18,6 +18,12 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+/*
+ * OncePerRequestFilter makes a single execution for each request to our API. 
+ * It provides a doFilterInternal() method that we will implement parsing & validating JWT, 
+ * loading User details (using UserDetailsService), checking Authorizaion (using UsernamePasswordAuthenticationToken)
+ *  */
+
 public class AuthTokenFilter extends OncePerRequestFilter {
 
 	@Autowired
