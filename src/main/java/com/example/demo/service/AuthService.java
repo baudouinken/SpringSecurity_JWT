@@ -48,11 +48,6 @@ public class AuthService {
 
 	public ResponseEntity<?> authenticateUser(LoginRequest loginRequest) {
 
-		/*
-		 * UsernamePasswordAuthenticationToken gets {username, password} from login
-		 * Request, AuthenticationManager will use it to authenticate a login account
-		 */
-
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
