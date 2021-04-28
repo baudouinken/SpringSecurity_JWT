@@ -114,7 +114,7 @@ public class AuthService {
 		String subject = "Successfully registred!!!";
 		mailService.sendMail(text, user, subject);
 
-		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+		return ResponseEntity.ok(user);
 	}
 
 }
