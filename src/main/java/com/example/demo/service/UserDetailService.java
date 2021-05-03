@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.UUID;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,10 @@ public class UserDetailService implements UserDetailsService {
 				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
 
 		return UserDetailsImpl.build(user);
+	}
+	
+	public User findById(UUID id) {
+		return userRepository.findById(id).get();
 	}
 
 }
